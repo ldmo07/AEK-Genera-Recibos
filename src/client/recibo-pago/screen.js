@@ -142,21 +142,21 @@ export default Screen = () => {
 
 
         // Muestra errores si el valor combinado debito es menor al valor minimo de la combinacion
-        if ((valorCombinadoDebito>0) && (valorCombinadoDebito < valorMinimoCombinacionPago)) {
+        if ((valorCombinadoDebito > 0) && (valorCombinadoDebito < valorMinimoCombinacionPago)) {
             mostrarAlertaError(`El valor a pagar con debito no puede ser menor a $ ${valorMinimoCombinacionPago.toLocaleString('de-DE')}`);
             setValorCombinadoDebito(0);
             return;
         }
 
         // Muestra errores si el valor combinado credito es menor al valor minimo de la combinacion
-        if ((valorCombinadoCredito>0) && (valorCombinadoCredito < valorMinimoCombinacionPago)) {
+        if ((valorCombinadoCredito > 0) && (valorCombinadoCredito < valorMinimoCombinacionPago)) {
             mostrarAlertaError(`El valor a pagar con credito no puede ser menor a $ ${valorMinimoCombinacionPago.toLocaleString('de-DE')}`);
             setValorCombinadoCredito(0);
             return;
         }
 
         // Muestra errores si el valor combinado cheke es menor al valor minimo de la combinacion
-        if ((valorCombinadoCheke>0) && (valorCombinadoCheke < valorMinimoCombinacionPago)) {
+        if ((valorCombinadoCheke > 0) && (valorCombinadoCheke < valorMinimoCombinacionPago)) {
             mostrarAlertaError(`El valor a pagar con cheque no puede ser menor a $ ${valorMinimoCombinacionPago.toLocaleString('de-DE')}`);
             setValorCombinadoCheke(0);
             return;
@@ -630,24 +630,34 @@ export default Screen = () => {
                     <h2>Suma combinados = {sumaValoresCombinados}</h2>
                     <h2>resultado {total - (valorDonaciones + Number(ultimoCarnet.Importe))}</h2> */}
 
-                    <div className="flex items-center">
-                        <label style={estiloBadges} htmlFor="idPrograma" className="w-1/3 text-gray-700 font-medium">Programa:</label>
-                        <select
-                            className="flex-1 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            id="idPrograma"
-                            name="idPrograma"
-                            onChange={handleChangePrograma}
-                        >
-                            {(Object.keys(programaSeleccionado).length === 0) && <option key={"0000"} value={"0000"} style={{ color: 'red' }}>
-                                --Selecciona un Programa--
-                            </option>}
-                            {infoPrograma.map((prog) => (
-                                <option key={prog.ProgramaAcademicoID} value={prog.ProgramaAcademicoID}>
-                                    {`${prog.Descripcion} - ( ${prog.ProgramaAcademicoID} )`}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                    {
+                        (infoPrograma.length > 0 && Boolean(infoPrograma[0]?.ProgramaAcademicoID)) ? (
+                            <div className="flex items-center">
+                                <label style={estiloBadges} htmlFor="idPrograma" className="w-1/3 text-gray-700 font-medium">Programa:</label>
+                                <select
+                                    className="flex-1 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    id="idPrograma"
+                                    name="idPrograma"
+                                    onChange={handleChangePrograma}
+                                >
+                                    {(Object.keys(programaSeleccionado).length === 0) && <option key={"0000"} value={"0000"} style={{ color: 'red' }}>
+                                        --Selecciona un Programa--
+                                    </option>}
+                                    {infoPrograma.map((prog) => (
+                                        <option key={prog.ProgramaAcademicoID} value={prog.ProgramaAcademicoID}>
+                                            {`${prog.Descripcion} - ( ${prog.ProgramaAcademicoID} )`}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        ) :
+                            (
+                                <div className="animate-pulse flex items-center gap-4">
+                                    <div className="h-8 w-24 bg-gray-300 rounded"></div>
+                                    <div className="h-10 flex-1 bg-gray-300 rounded"></div>
+                                </div>
+                            )
+                    }
 
                     {
                         (mostrarDivCargando) && <div className="flex justify-center items-center">
@@ -995,7 +1005,7 @@ export default Screen = () => {
 
                                         {(
                                             /*Muestra errores si el valor combinado debito es menor al monto minimo de la combinacion*/
-                                            ((valorCombinadoDebito>0) && (valorCombinadoDebito < valorMinimoCombinacionPago)) ?
+                                            ((valorCombinadoDebito > 0) && (valorCombinadoDebito < valorMinimoCombinacionPago)) ?
                                                 <SpanErrorComponents mensaje={`El valor a pagar con debito no puede ser menor a $ ${valorMinimoCombinacionPago.toLocaleString('de-DE')}`} /> : ''
                                         )}
 
@@ -1023,7 +1033,7 @@ export default Screen = () => {
 
                                         {(
                                             /*Muestra errores si el valor combinado credito es menor al monto minimo de la combinacion*/
-                                            ((valorCombinadoCredito>0) && (valorCombinadoCredito < valorMinimoCombinacionPago)) ?
+                                            ((valorCombinadoCredito > 0) && (valorCombinadoCredito < valorMinimoCombinacionPago)) ?
                                                 <SpanErrorComponents mensaje={`El valor a pagar con credito no puede ser menor a $ ${valorMinimoCombinacionPago.toLocaleString('de-DE')}`} /> : ''
                                         )}
 
@@ -1049,7 +1059,7 @@ export default Screen = () => {
 
                                         {(
                                             /*Muestra errores si el valor combinado cheke es menor al monto minimo de la combinacion*/
-                                            ((valorCombinadoCheke>0)&& ( valorCombinadoCheke< valorMinimoCombinacionPago)) ?
+                                            ((valorCombinadoCheke > 0) && (valorCombinadoCheke < valorMinimoCombinacionPago)) ?
                                                 <SpanErrorComponents mensaje={`El valor a pagar con cheque no puede ser menor a $ ${valorMinimoCombinacionPago.toLocaleString('de-DE')}`} /> : ''
                                         )}
 
@@ -1140,7 +1150,7 @@ export default Screen = () => {
                     {
                         (infoRecibo.urlRecibo != "") &&
                         <div className="flex items-center py-6 justify-center" ref={scrollRef}>
-                        {/* <iframe src={infoRecibo.urlRecibo} width="600" height="400"></iframe> */}
+                            {/* <iframe src={infoRecibo.urlRecibo} width="600" height="400"></iframe> */}
                             <iframe src={infoRecibo.urlRecibo} width="100%" height="260px"></iframe>
                         </div>
                     }
