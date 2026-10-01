@@ -112,7 +112,15 @@ export const useAxiosProgramasInscritos = (idUser = '') => {
             return arrayProgramas;
 
         } catch (error) {
-            mostrarAlertaError("Error Obteniendo el programa");
+            const existeError = error.response.data.Envelope.Body.ObtenerProgramasInscritosResponse.ObtenerProgramasInscritosResponse.ResultadoTransaccion.Mensaje;
+
+            if (existeError) {
+                mostrarAlertaError(`No fue posible obtener la información solicitada. \n\nMotivo : ${existeError}`);
+                return [];
+            } else {
+                mostrarAlertaError("Se presentan intermitencias al consultar la información. Por favor, intenta nuevamente en unos momentos.");
+                return [];
+            }
         }
 
     }
