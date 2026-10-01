@@ -112,6 +112,7 @@ export const useAxiosProgramasInscritos = (idUser = '') => {
             return arrayProgramas;
 
         } catch (error) {
+            // validamos si existe un mensaje de error para mostrarlo
             const existeError = error.response.data.Envelope.Body.ObtenerProgramasInscritosResponse.ObtenerProgramasInscritosResponse.ResultadoTransaccion.Mensaje;
 
             if (existeError) {
